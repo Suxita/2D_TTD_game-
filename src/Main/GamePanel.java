@@ -31,7 +31,7 @@ public class GamePanel extends JPanel implements Runnable {
     int fps = 60;
 
     TileManager tileM = new TileManager(this);
-    public KeyHandler keyh = new KeyHandler(this); // Pass 'this' here
+    public KeyHandler keyh = new KeyHandler(this); 
     Thread gameThread;
     Sound sound = new Sound();
 
@@ -54,7 +54,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
-        this.addKeyListener(keyh); // Use the instance with the 'this' reference
+        this.addKeyListener(keyh); 
         this.setFocusable(true);
     }
 
@@ -72,7 +72,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void run() {
 
-        double drawInterval = 1000000000.0 / fps; // 0.0166666 seconds
+        double drawInterval = 1000000000.0 / fps; 
         double delta = 0;
         long lastTime = System.nanoTime();
         long currentTime;
@@ -109,7 +109,7 @@ public class GamePanel extends JPanel implements Runnable {
             if (enemies[i] != null) {
                 enemies[i].update();
                 checker.checkPlayerWithEnemy(player, enemies[i]);
-                checker.checkEnemyWithTile(enemies[i]); // Check for tile collision
+                checker.checkEnemyWithTile(enemies[i]); 
             }
         }
     }

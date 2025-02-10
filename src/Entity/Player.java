@@ -56,7 +56,7 @@ public class Player extends Entity {
 
     public void update() {
         if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
-            // Determine direction based on input.
+          
             if (keyH.upPressed) {
                 direction = "up";
             } else if (keyH.downPressed) {
@@ -67,11 +67,10 @@ public class Player extends Entity {
                 direction = "right";
             }
 
-            // Reset collision flag before checking.
             collisionOn = false;
             gp.checker.checkTile(this);
 
-            // Move the player if no collision was detected.
+            
             if (!collisionOn) {
                 switch (direction) {
                     case "up":
@@ -89,7 +88,6 @@ public class Player extends Entity {
                 }
             }
 
-            // Clamp the player's position so they don't go out of bounds.
             if (worldX < 0) {
                 worldX = 0;
             }
@@ -103,7 +101,7 @@ public class Player extends Entity {
                 worldY = gp.maxWorldHeight - gp.tileSize;
             }
 
-            // Sprite animation logic.
+        
             spriteCounter++;
             if (spriteCounter > 15) {
                 spriteNum = (spriteNum == 1) ? 2 : 1;

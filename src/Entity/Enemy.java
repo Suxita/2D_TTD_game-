@@ -11,7 +11,7 @@ public class Enemy extends Entity {
     GamePanel gp;
     Random random = new Random();
 
-    // Declare ALL image variables here, including the 3rd frame variations:
+   
     BufferedImage up1, up2, up3, down1, down2, down3, left1, left2, left3, right1, right2, right3;
 
 
@@ -27,44 +27,44 @@ public class Enemy extends Entity {
         try {
             up1 = ImageIO.read(getClass().getResourceAsStream("/Enemy/up1.png"));
             up2 = ImageIO.read(getClass().getResourceAsStream("/Enemy/up2.png"));
-            up3 = ImageIO.read(getClass().getResourceAsStream("/Enemy/up3.png")); // Now declared and initialized
+            up3 = ImageIO.read(getClass().getResourceAsStream("/Enemy/up3.png")); 
             down1 = ImageIO.read(getClass().getResourceAsStream("/Enemy/down1.png"));
             down2 = ImageIO.read(getClass().getResourceAsStream("/Enemy/down2.png"));
-            down3 = ImageIO.read(getClass().getResourceAsStream("/Enemy/down3.png")); // Now declared and initialized
+            down3 = ImageIO.read(getClass().getResourceAsStream("/Enemy/down3.png")); 
             left1 = ImageIO.read(getClass().getResourceAsStream("/Enemy/left1.png"));
             left2 = ImageIO.read(getClass().getResourceAsStream("/Enemy/left2.png"));
-            left3 = ImageIO.read(getClass().getResourceAsStream("/Enemy/left3.png")); // Now declared and initialized
+            left3 = ImageIO.read(getClass().getResourceAsStream("/Enemy/left3.png")); 
             right1 = ImageIO.read(getClass().getResourceAsStream("/Enemy/right1.png"));
             right2 = ImageIO.read(getClass().getResourceAsStream("/Enemy/right2.png"));
-            right3 = ImageIO.read(getClass().getResourceAsStream("/Enemy/right3.png")); // Now declared and initialized
+            right3 = ImageIO.read(getClass().getResourceAsStream("/Enemy/right3.png")); 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
     public void update() {
-        // Calculate direction vector towards player
+    
         int deltaX = gp.player.worldX - worldX;
         int deltaY = gp.player.worldY - worldY;
         double distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
 
-        if (distance > 0) { // Avoid division by zero
+        if (distance > 0) { 
             double dirX = deltaX / distance;
             double dirY = deltaY / distance;
 
-            // Determine direction based on vector
+          
             if (Math.abs(dirX) > Math.abs(dirY)) {
                 direction = dirX > 0 ? "right" : "left";
             } else {
                 direction = dirY > 0 ? "down" : "up";
             }
 
-            // Move towards the player
+       
             worldX += dirX * speed;
             worldY += dirY * speed;
         }
 
         spriteCounter++;
-        if (spriteCounter > 10) { // Adjust speed of animation by changing this number
+        if (spriteCounter > 10) { 
             spriteNum++;
             if (spriteNum > 3) {
                 spriteNum = 1;

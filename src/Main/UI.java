@@ -9,7 +9,7 @@ public class UI {
     double playTime;
     DecimalFormat dFormat = new DecimalFormat("#0.00");
     DecimalFormat mFormat = new DecimalFormat("00");
-    public boolean gameOver = false; // Add gameOver flag
+    public boolean gameOver = false; 
 
     public UI(GamePanel gp) {
         this.gp = gp;
@@ -20,7 +20,7 @@ public class UI {
         g2.setFont(arial_40);
         g2.setColor(new Color(255, 51, 51));
 
-        if (!gameOver) { // Only draw timer if game is not over
+        if (!gameOver) { 
             playTime += (double) 1 / gp.fps;
 
             String timerText;
@@ -39,16 +39,16 @@ public class UI {
             g2.drawString(timerText, x, y);
         }
 
-        if (gameOver) { // Draw game over message
+        if (gameOver) { 
             String gameOverText = "Game Over";
             FontMetrics metrics = g2.getFontMetrics(arial_40);
             int x = gp.screenWidth / 2 - metrics.stringWidth(gameOverText) / 2;
             int y = gp.screenHeight / 2;
 
-            g2.setColor(Color.RED); // Or any color you like
+            g2.setColor(Color.RED); 
             g2.drawString(gameOverText, x, y);
 
-            // You can add a "Press Enter to Restart" message here as well.
+          
         }
     }
 }

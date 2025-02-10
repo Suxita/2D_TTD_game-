@@ -14,7 +14,98 @@ public class collisionChecker {
     }
 
     public void checkTile(Entity entity) {
-        // ... (Your existing checkTile() method code - no changes needed)
+        int entityLeftWorldX = entity.worldX + entity.solidArea.x;
+        int entityRightWorldX = entity.worldX + entity.solidArea.x + entity.solidArea.width;
+        int entityTopWorldY = entity.worldY + entity.solidArea.y;
+        int entityBottomWorldY = entity.worldY + entity.solidArea.y + entity.solidArea.height;
+
+        int entityLeftCol = entityLeftWorldX / gp.tileSize;
+        int entityRightCol = entityRightWorldX / gp.tileSize;
+        int entityTopRow = entityTopWorldY / gp.tileSize;
+        int entityBottomRow = entityBottomWorldY / gp.tileSize;
+
+        int tileNum1, tileNum2;
+
+        switch (entity.direction) {
+            case "up":
+                int nextTopRow = (entityTopWorldY - entity.speed) / gp.tileSize;
+                tileNum1 = gp.tileM.mapTileNumber[entityLeftCol][nextTopRow];
+                tileNum2 = gp.tileM.mapTileNumber[entityRightCol][nextTopRow];
+                if (gp.tileM.tile[tileNum1].collision || gp.tileM.tile[tileNum2].collision) {
+                    entity.collisionOn = true;
+                }
+                break;
+            case "down":
+                int nextBottomRow = (entityBottomWorldY + entity.speed) / gp.tileSize;
+                tileNum1 = gp.tileM.mapTileNumber[entityLeftCol][nextBottomRow];
+                tileNum2 = gp.tileM.mapTileNumber[entityRightCol][nextBottomRow];
+                if (gp.tileM.tile[tileNum1].collision || gp.tileM.tile[tileNum2].collision) {
+                    entity.collisionOn = true;
+                }
+                break;
+            case "left":
+                int nextLeftCol = (entityLeftWorldX - entity.speed) / gp.tileSize;
+                tileNum1 = gp.tileM.mapTileNumber[nextLeftCol][entityTopRow];
+                tileNum2 = gp.tileM.mapTileNumber[nextLeftCol][entityBottomRow];
+                if (gp.tileM.tile[tileNum1].collision || gp.tileM.tile[tileNum2].collision) {
+                    entity.collisionOn = true;
+                }
+                break;
+            case "right":
+                int nextRightCol = (entityRightWorldX + entity.speed) / gp.tileSize;
+                tileNum1 = gp.tileM.mapTileNumber[nextRightCol][entityTopRow];
+                tileNum2 = gp.tileM.mapTileNumber[nextRightCol][entityBottomRow];
+                if (gp.tileM.tile[tileNum1].collision || gp.tileM.tile[tileNum2].collision) {
+                    entity.collisionOn = true;
+                }
+                break;
+            case "upleft":  // Handle diagonal cases
+                nextTopRow = (entityTopWorldY - entity.speed) / gp.tileSize;
+                nextLeftCol = (entityLeftWorldX - entity.speed) / gp.tileSize;
+                tileNum1 = gp.tileM.mapTileNumber[nextLeftCol][nextTopRow];
+                tileNum2 = gp.tileM.mapTileNumber[entityRightCol][nextTopRow]; // Check right as well
+                int tileNum3 = gp.tileM.mapTileNumber[nextLeftCol][entityBottomRow]; // Check bottom as well
+
+                if (gp.tileM.tile[tileNum1].collision || gp.tileM.tile[tileNum2].collision || gp.tileM.tile[tileNum3].collision) {
+                    entity.collisionOn = true;
+                }
+                break;
+            case "upright":
+                nextTopRow = (entityTopWorldY - entity.speed) / gp.tileSize;
+                nextRightCol = (entityRightWorldX + entity.speed) / gp.tileSize;
+                tileNum1 = gp.tileM.mapTileNumber[entityLeftCol][nextTopRow];
+                tileNum2 = gp.tileM.mapTileNumber[nextRightCol][nextTopRow];
+                int tileNum4 = gp.tileM.mapTileNumber[nextRightCol][entityBottomRow];
+
+                if (gp.tileM.tile[tileNum1].collision || gp.tileM.tile[tileNum2].collision || tileNum4.collision) {
+                    entity.collisionOn = true;
+                }
+                break;
+            case "downleft":
+                nextBottomRow = (entityBottomWorldY + entity.speed) / gp.tileSize;
+                nextLeftCol = (entityLeftWorldX - entity.speed) / gp.tileSize;
+                tileNum1 = gp.tileM.mapTileNumber[nextLeftCol][nextBottomRow];
+                tileNum2 = gp.tileM.mapTileNumber[entityRightCol][nextBottomRow];
+                int tileNum5 = gp.tileM.mapTileNumber[nextLeftCol][entityTopRow];
+                if (gp.tileM.tile[tileNum1].collision || gp.tileM.tile[tileNum2].collision || tileNum5.collision) {
+                    entity.collisionOn = true;
+                }
+                break;
+            case "downright":
+                nextBottomRow = (entityBottomWorldY + entity.speed) / gp.tileSize;
+                nextRightCol = (entityRightWorldX + entity.speed) / gp.tileSize;
+                tileNum1 = gp.tileM.mapTileNumber[entityLeftCol][nextBottomRow];
+                tileNum2 = gp.tileM.mapTileNumber[nextRightCol][nextBottomRow];
+                int tileNum6 = gp.tileM.mapTileNumber[nextRightCol][entityTopRow];
+
+                if (gp.tileM.tile[tileNum1].collision || gp.tileM.tile[tileNum2].collision || tileNum6.collision) {
+                    entity.collisionOn = true;
+                }
+                break;
+        }
+    }
+
+     
     }
 
     public void checkPlayerWithEnemy(Player player, Enemy enemy) {
@@ -29,7 +120,7 @@ public class collisionChecker {
                 System.out.println("Game Over!");
                 gp.stopMusic();
                 gp.playSE(2);
-                // Implement your game over logic here (e.g., stop game loop)
+              
             }
         }
     }
@@ -86,7 +177,7 @@ public class collisionChecker {
                 tileNum2 = gp.tileM.mapTileNumber[nextRightCol][enemyBottomRow];
                 break;
             default:
-                return; // or handle the default case as needed
+                return; 
         }
 
         if (gp.tileM.tile[tileNum1].collision || gp.tileM.tile[tileNum2].collision) {

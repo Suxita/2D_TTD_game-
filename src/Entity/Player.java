@@ -20,7 +20,7 @@ public class Player extends Entity {
     private boolean isInvincible = false;
     private int invincibleCounter = 0;
     private final int invincibleDuration = 60; // 1 second at 60 FPS
-    private boolean visible = true; // For blinking effect
+    private boolean visible = true; // blinking effect
 
     public Player(GamePanel gp, KeyHandler keyH) {
 
@@ -110,7 +110,7 @@ public class Player extends Entity {
                 worldY = gp.maxWorldHeight - gp.tileSize;
             }
 
-            // Sprite animation logic.
+            // Sprite animation
             spriteCounter++;
             if (spriteCounter > 15) {
                 spriteNum = (spriteNum == 1) ? 2 : 1;
@@ -122,12 +122,12 @@ public class Player extends Entity {
         if (isInvincible) {
             invincibleCounter++;
 
-            // Blink effect: toggle visibility every 5 frames
+            // Blink effect
             if (invincibleCounter % 5 == 0) {
                 visible = !visible;
             }
 
-            // End invincibility period
+            // End invincibility
             if (invincibleCounter >= invincibleDuration) {
                 isInvincible = false;
                 invincibleCounter = 0;
@@ -138,7 +138,7 @@ public class Player extends Entity {
 
 
     public void draw(Graphics2D g2) {
-        if(visible) { // Only draw when visible (for blinking effect)
+        if(visible) { // Only draw when visible (fo
             BufferedImage image = null;
             switch(direction) {
                 case "up":
@@ -160,7 +160,7 @@ public class Player extends Entity {
     public void takeDamage(int damage) {
         if(!isInvincible) {
             health -= damage;
-            isInvincible = true; // Start invincibility period
+            isInvincible = true; // Start invincibility
             invincibleCounter = 0;
             visible = true;
             gp.playSE(2);

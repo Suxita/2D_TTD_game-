@@ -6,7 +6,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class SuperObject {
-    public BufferedImage image; // Declare 'image' here
+    public BufferedImage image;
     public String name;
     public boolean collision = false;
     public int worldX;
@@ -16,7 +16,7 @@ public class SuperObject {
         int screenX = worldX - gp.player.worldX + gp.player.screenX;
         int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
-        if (image != null) { // Check if image is loaded to prevent NullPointerException
+        if (image != null) {
             if (worldX + gp.tileSize > gp.player.worldX - gp.player.screenX &&
                     worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
                     worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&

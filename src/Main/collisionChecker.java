@@ -14,7 +14,7 @@ public class collisionChecker {
     }
 
     public void checkTile(Entity entity) {
-        entity.collisionOn = false; // Reset at the start
+        entity.collisionOn = false;
 
         int entityLeftWorldX = entity.worldX + entity.solidArea.x;
         int entityRightWorldX = entity.worldX + entity.solidArea.x + entity.solidArea.width;
@@ -26,7 +26,7 @@ public class collisionChecker {
         int entityTopRow = entityTopWorldY / gp.tileSize;
         int entityBottomRow = entityBottomWorldY / gp.tileSize;
 
-        int tileNum1 = 0, tileNum2 = 0; // Initialize to 0 to avoid potential issues
+        int tileNum1 = 0, tileNum2 = 0;
 
         switch (entity.direction) {
             case "up":
@@ -35,7 +35,7 @@ public class collisionChecker {
                     entity.collisionOn = true;
                     return;
                 }
-                // **Corrected Index Calculation - Clamping to valid range**
+
                 tileNum1 = gp.tileM.mapTileNumber[Math.min(entityLeftCol, gp.maxWorldCol - 1)][Math.max(0, nextTopRow)];
                 tileNum2 = gp.tileM.mapTileNumber[Math.min(entityRightCol, gp.maxWorldCol - 1)][Math.max(0, nextTopRow)];
                 break;
@@ -45,7 +45,7 @@ public class collisionChecker {
                     entity.collisionOn = true;
                     return;
                 }
-                // **Corrected Index Calculation - Clamping to valid range**
+
                 tileNum1 = gp.tileM.mapTileNumber[Math.min(entityLeftCol, gp.maxWorldCol - 1)][Math.min(nextBottomRow, gp.maxWorldRow - 1)];
                 tileNum2 = gp.tileM.mapTileNumber[Math.min(entityRightCol, gp.maxWorldCol - 1)][Math.min(nextBottomRow, gp.maxWorldRow - 1)];
                 break;
@@ -55,7 +55,7 @@ public class collisionChecker {
                     entity.collisionOn = true;
                     return;
                 }
-                // **Corrected Index Calculation - Clamping to valid range**
+
                 tileNum1 = gp.tileM.mapTileNumber[Math.max(0, nextLeftCol)][Math.min(entityTopRow, gp.maxWorldRow - 1)];
                 tileNum2 = gp.tileM.mapTileNumber[Math.max(0, nextLeftCol)][Math.min(entityBottomRow, gp.maxWorldRow - 1)];
                 break;
@@ -65,12 +65,12 @@ public class collisionChecker {
                     entity.collisionOn = true;
                     return;
                 }
-                // **Corrected Index Calculation - Clamping to valid range**
+
                 tileNum1 = gp.tileM.mapTileNumber[Math.min(nextRightCol, gp.maxWorldCol - 1)][Math.min(entityTopRow, gp.maxWorldRow - 1)];
                 tileNum2 = gp.tileM.mapTileNumber[Math.min(nextRightCol, gp.maxWorldCol - 1)][Math.min(entityBottomRow, gp.maxWorldRow - 1)];
                 break;
             default:
-                return; // Or handle the default case as needed
+                return;
         }
 
         if (gp.tileM.tile[tileNum1].collision || gp.tileM.tile[tileNum2].collision) {
@@ -79,7 +79,7 @@ public class collisionChecker {
     }
 
     public void checkEnemyWithTile(Enemy enemy) {
-        enemy.collisionOn = false; // Reset at the start
+        enemy.collisionOn = false;
 
         int enemyLeftWorldX = enemy.worldX + enemy.solidArea.x;
         int enemyRightWorldX = enemy.worldX + enemy.solidArea.x + enemy.solidArea.width;
@@ -91,7 +91,7 @@ public class collisionChecker {
         int enemyTopRow = enemyTopWorldY / gp.tileSize;
         int enemyBottomRow = enemyBottomWorldY / gp.tileSize;
 
-        int tileNum1 = 0, tileNum2 = 0; // Initialize to 0 to avoid potential issues
+        int tileNum1 = 0, tileNum2 = 0;
 
 
         switch (enemy.direction) {
@@ -101,7 +101,7 @@ public class collisionChecker {
                     enemy.collisionOn = true;
                     return;
                 }
-                // **Corrected Index Calculation - Clamping to valid range**
+
                 tileNum1 = gp.tileM.mapTileNumber[Math.min(enemyLeftCol, gp.maxWorldCol - 1)][Math.max(0, nextTopRow)];
                 tileNum2 = gp.tileM.mapTileNumber[Math.min(enemyRightCol, gp.maxWorldCol - 1)][Math.max(0, nextTopRow)];
                 break;
@@ -111,7 +111,7 @@ public class collisionChecker {
                     enemy.collisionOn = true;
                     return;
                 }
-                // **Corrected Index Calculation - Clamping to valid range**
+
                 tileNum1 = gp.tileM.mapTileNumber[Math.min(enemyLeftCol, gp.maxWorldCol - 1)][Math.min(nextBottomRow, gp.maxWorldRow - 1)];
                 tileNum2 = gp.tileM.mapTileNumber[Math.min(enemyRightCol, gp.maxWorldCol - 1)][Math.min(nextBottomRow, gp.maxWorldRow - 1)];
                 break;
@@ -121,7 +121,7 @@ public class collisionChecker {
                     enemy.collisionOn = true;
                     return;
                 }
-                // **Corrected Index Calculation - Clamping to valid range**
+
                 tileNum1 = gp.tileM.mapTileNumber[Math.max(0, nextLeftCol)][Math.min(enemyTopRow, gp.maxWorldRow - 1)];
                 tileNum2 = gp.tileM.mapTileNumber[Math.max(0, nextLeftCol)][Math.min(enemyBottomRow, gp.maxWorldRow - 1)];
                 break;
@@ -131,7 +131,7 @@ public class collisionChecker {
                     enemy.collisionOn = true;
                     return;
                 }
-                // **Corrected Index Calculation - Clamping to valid range**
+
                 tileNum1 = gp.tileM.mapTileNumber[Math.min(nextRightCol, gp.maxWorldCol - 1)][Math.min(enemyTopRow, gp.maxWorldRow - 1)];
                 tileNum2 = gp.tileM.mapTileNumber[Math.min(nextRightCol, gp.maxWorldCol - 1)][Math.min(enemyBottomRow, gp.maxWorldRow - 1)];
                 break;

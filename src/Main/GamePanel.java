@@ -54,7 +54,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
-        this.addKeyListener(keyh); // Use the instance with the 'this' reference
+        this.addKeyListener(keyh);
         this.setFocusable(true);
         healthPerHeart = (int) Math.ceil((double) maxHealth / heartsToDisplay);
     }

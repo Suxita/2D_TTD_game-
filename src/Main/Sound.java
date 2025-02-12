@@ -17,7 +17,7 @@ public class Sound {
 
     public void setFile(int i){
         try{
-            AudioInputStream ais= AudioSystem.getAudioInputStream(soundURL[i]); // Line 18 will now work for index 2 if soundURL[2] is initialized
+            AudioInputStream ais= AudioSystem.getAudioInputStream(soundURL[i]);
             clip =AudioSystem.getClip();
             clip.open(ais);
         }catch (Exception e){

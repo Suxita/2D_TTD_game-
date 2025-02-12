@@ -14,7 +14,7 @@ public class Enemy extends Entity {
     private long lastAttackTime = 0;
     private final long attackCooldown = 1000;
 
-    // Declare ALL image variables here, including the 3rd frame variations:
+    //image variables
     BufferedImage up1, up2, up3, down1, down2, down3, left1, left2, left3, right1, right2, right3;
 
 
@@ -22,7 +22,7 @@ public class Enemy extends Entity {
         this.gp = gp;
         solidArea = new Rectangle(0, 0, 48, 48);
         speed = 2;
-        direction = "down"; // Initial direction (can be any default, or even random if you like)
+        direction = "down";
         getPlayerImage();
     }
 

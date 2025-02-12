@@ -21,6 +21,6 @@ public class OBJ_key extends SuperObject {  // Extends SuperObject
     public void pickup() {
         gp.player.hasKey = true;
         gp.playSE(1);
-        gp.obj[0] = null; // Remove the key from the map (if it's at index 0)
+        gp.obj[0] = null;
     }
 }

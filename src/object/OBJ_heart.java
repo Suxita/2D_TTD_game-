@@ -4,11 +4,11 @@ import Main.GamePanel;
 
 import javax.imageio.ImageIO;
 import java.io.IOException;
-import java.awt.image.BufferedImage; // Import BufferedImage
+import java.awt.image.BufferedImage;
 
 public class OBJ_heart extends SuperObject {
     GamePanel gp;
-    public BufferedImage[] images = new BufferedImage[3]; // Array to hold heart images
+    public BufferedImage[] images = new BufferedImage[3];
 
     public OBJ_heart(GamePanel gp) {
         this.gp = gp;

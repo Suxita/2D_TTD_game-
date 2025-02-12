@@ -37,7 +37,7 @@ public class AssetSetter {
                     screenY < -gp.tileSize || screenY > gp.screenHeight + gp.tileSize) {
                 gp.enemies[i].worldX = worldX;
                 gp.enemies[i].worldY = worldY;
-                gp.enemies[i].speed = random.nextInt(3) + 1; // Random speed 1-3
+                gp.enemies[i].speed = random.nextInt(3) + 1;
                 spawned = true;
             }
         }

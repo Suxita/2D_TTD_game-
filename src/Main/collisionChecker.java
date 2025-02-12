@@ -14,28 +14,73 @@ public class collisionChecker {
     }
 
     public void checkTile(Entity entity) {
-        // ... (Your existing checkTile() method code - no changes needed)
-    }
+        entity.collisionOn = false; // Reset at the start
 
-    public void checkPlayerWithEnemy(Player player, Enemy enemy) {
-        Rectangle playerRect = new Rectangle(player.worldX + player.solidArea.x, player.worldY + player.solidArea.y, player.solidArea.width, player.solidArea.height);
-        Rectangle enemyRect = new Rectangle(enemy.worldX + enemy.solidArea.x, enemy.worldY + enemy.solidArea.y, enemy.solidArea.width, enemy.solidArea.height);
+        int entityLeftWorldX = entity.worldX + entity.solidArea.x;
+        int entityRightWorldX = entity.worldX + entity.solidArea.x + entity.solidArea.width;
+        int entityTopWorldY = entity.worldY + entity.solidArea.y;
+        int entityBottomWorldY = entity.worldY + entity.solidArea.y + entity.solidArea.height;
 
-        if (playerRect.intersects(enemyRect)) {
-            player.health -= 10;
-            System.out.println("Player health: " + player.health);
+        int entityLeftCol = entityLeftWorldX / gp.tileSize;
+        int entityRightCol = entityRightWorldX / gp.tileSize;
+        int entityTopRow = entityTopWorldY / gp.tileSize;
+        int entityBottomRow = entityBottomWorldY / gp.tileSize;
 
-            if (player.health <= 0) {
-                System.out.println("Game Over!");
-                gp.stopMusic();
-                gp.playSE(2);
-                // Implement your game over logic here (e.g., stop game loop)
-            }
+        int tileNum1 = 0, tileNum2 = 0; // Initialize to 0 to avoid potential issues
+
+        switch (entity.direction) {
+            case "up":
+                int nextTopRow = (entityTopWorldY - entity.speed) / gp.tileSize;
+                if (nextTopRow < 0) {
+                    entity.collisionOn = true;
+                    return;
+                }
+                // **Corrected Index Calculation - Clamping to valid range**
+                tileNum1 = gp.tileM.mapTileNumber[Math.min(entityLeftCol, gp.maxWorldCol - 1)][Math.max(0, nextTopRow)];
+                tileNum2 = gp.tileM.mapTileNumber[Math.min(entityRightCol, gp.maxWorldCol - 1)][Math.max(0, nextTopRow)];
+                break;
+            case "down":
+                int nextBottomRow = (entityBottomWorldY + entity.speed) / gp.tileSize;
+                if (nextBottomRow >= gp.maxWorldRow) {
+                    entity.collisionOn = true;
+                    return;
+                }
+                // **Corrected Index Calculation - Clamping to valid range**
+                tileNum1 = gp.tileM.mapTileNumber[Math.min(entityLeftCol, gp.maxWorldCol - 1)][Math.min(nextBottomRow, gp.maxWorldRow - 1)];
+                tileNum2 = gp.tileM.mapTileNumber[Math.min(entityRightCol, gp.maxWorldCol - 1)][Math.min(nextBottomRow, gp.maxWorldRow - 1)];
+                break;
+            case "left":
+                int nextLeftCol = (entityLeftWorldX - entity.speed) / gp.tileSize;
+                if (nextLeftCol < 0) {
+                    entity.collisionOn = true;
+                    return;
+                }
+                // **Corrected Index Calculation - Clamping to valid range**
+                tileNum1 = gp.tileM.mapTileNumber[Math.max(0, nextLeftCol)][Math.min(entityTopRow, gp.maxWorldRow - 1)];
+                tileNum2 = gp.tileM.mapTileNumber[Math.max(0, nextLeftCol)][Math.min(entityBottomRow, gp.maxWorldRow - 1)];
+                break;
+            case "right":
+                int nextRightCol = (entityRightWorldX + entity.speed) / gp.tileSize;
+                if (nextRightCol >= gp.maxWorldCol) {
+                    entity.collisionOn = true;
+                    return;
+                }
+                // **Corrected Index Calculation - Clamping to valid range**
+                tileNum1 = gp.tileM.mapTileNumber[Math.min(nextRightCol, gp.maxWorldCol - 1)][Math.min(entityTopRow, gp.maxWorldRow - 1)];
+                tileNum2 = gp.tileM.mapTileNumber[Math.min(nextRightCol, gp.maxWorldCol - 1)][Math.min(entityBottomRow, gp.maxWorldRow - 1)];
+                break;
+            default:
+                return; // Or handle the default case as needed
+        }
+
+        if (gp.tileM.tile[tileNum1].collision || gp.tileM.tile[tileNum2].collision) {
+            entity.collisionOn = true;
         }
     }
 
-
     public void checkEnemyWithTile(Enemy enemy) {
+        enemy.collisionOn = false; // Reset at the start
+
         int enemyLeftWorldX = enemy.worldX + enemy.solidArea.x;
         int enemyRightWorldX = enemy.worldX + enemy.solidArea.x + enemy.solidArea.width;
         int enemyTopWorldY = enemy.worldY + enemy.solidArea.y;
@@ -46,7 +91,8 @@ public class collisionChecker {
         int enemyTopRow = enemyTopWorldY / gp.tileSize;
         int enemyBottomRow = enemyBottomWorldY / gp.tileSize;
 
-        int tileNum1, tileNum2;
+        int tileNum1 = 0, tileNum2 = 0; // Initialize to 0 to avoid potential issues
+
 
         switch (enemy.direction) {
             case "up":
@@ -55,8 +101,9 @@ public class collisionChecker {
                     enemy.collisionOn = true;
                     return;
                 }
-                tileNum1 = gp.tileM.mapTileNumber[enemyLeftCol][nextTopRow];
-                tileNum2 = gp.tileM.mapTileNumber[enemyRightCol][nextTopRow];
+                // **Corrected Index Calculation - Clamping to valid range**
+                tileNum1 = gp.tileM.mapTileNumber[Math.min(enemyLeftCol, gp.maxWorldCol - 1)][Math.max(0, nextTopRow)];
+                tileNum2 = gp.tileM.mapTileNumber[Math.min(enemyRightCol, gp.maxWorldCol - 1)][Math.max(0, nextTopRow)];
                 break;
             case "down":
                 int nextBottomRow = (enemyBottomWorldY + enemy.speed) / gp.tileSize;
@@ -64,8 +111,9 @@ public class collisionChecker {
                     enemy.collisionOn = true;
                     return;
                 }
-                tileNum1 = gp.tileM.mapTileNumber[enemyLeftCol][nextBottomRow];
-                tileNum2 = gp.tileM.mapTileNumber[enemyRightCol][nextBottomRow];
+                // **Corrected Index Calculation - Clamping to valid range**
+                tileNum1 = gp.tileM.mapTileNumber[Math.min(enemyLeftCol, gp.maxWorldCol - 1)][Math.min(nextBottomRow, gp.maxWorldRow - 1)];
+                tileNum2 = gp.tileM.mapTileNumber[Math.min(enemyRightCol, gp.maxWorldCol - 1)][Math.min(nextBottomRow, gp.maxWorldRow - 1)];
                 break;
             case "left":
                 int nextLeftCol = (enemyLeftWorldX - enemy.speed) / gp.tileSize;
@@ -73,8 +121,9 @@ public class collisionChecker {
                     enemy.collisionOn = true;
                     return;
                 }
-                tileNum1 = gp.tileM.mapTileNumber[nextLeftCol][enemyTopRow];
-                tileNum2 = gp.tileM.mapTileNumber[nextLeftCol][enemyBottomRow];
+                // **Corrected Index Calculation - Clamping to valid range**
+                tileNum1 = gp.tileM.mapTileNumber[Math.max(0, nextLeftCol)][Math.min(enemyTopRow, gp.maxWorldRow - 1)];
+                tileNum2 = gp.tileM.mapTileNumber[Math.max(0, nextLeftCol)][Math.min(enemyBottomRow, gp.maxWorldRow - 1)];
                 break;
             case "right":
                 int nextRightCol = (enemyRightWorldX + enemy.speed) / gp.tileSize;
@@ -82,17 +131,27 @@ public class collisionChecker {
                     enemy.collisionOn = true;
                     return;
                 }
-                tileNum1 = gp.tileM.mapTileNumber[nextRightCol][enemyTopRow];
-                tileNum2 = gp.tileM.mapTileNumber[nextRightCol][enemyBottomRow];
+                // **Corrected Index Calculation - Clamping to valid range**
+                tileNum1 = gp.tileM.mapTileNumber[Math.min(nextRightCol, gp.maxWorldCol - 1)][Math.min(enemyTopRow, gp.maxWorldRow - 1)];
+                tileNum2 = gp.tileM.mapTileNumber[Math.min(nextRightCol, gp.maxWorldCol - 1)][Math.min(enemyBottomRow, gp.maxWorldRow - 1)];
                 break;
             default:
-                return; // or handle the default case as needed
+                return;
         }
 
         if (gp.tileM.tile[tileNum1].collision || gp.tileM.tile[tileNum2].collision) {
             enemy.collisionOn = true;
-        } else {
-            enemy.collisionOn = false;
         }
+    }
+
+    public boolean checkPlayerWithEnemy(Player player, Enemy enemy) {
+        Rectangle playerRect = new Rectangle(player.worldX + player.solidArea.x, player.worldY + player.solidArea.y, player.solidArea.width, player.solidArea.height);
+        Rectangle enemyRect = new Rectangle(enemy.worldX + enemy.solidArea.x, enemy.worldY + enemy.solidArea.y, enemy.solidArea.width, enemy.solidArea.height);
+
+        if (playerRect.intersects(enemyRect)) {
+            player.takeDamage(10);
+            return true;
+        }
+        return false;
     }
 }

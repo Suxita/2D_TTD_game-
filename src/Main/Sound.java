@@ -7,27 +7,28 @@ import java.net.URL;
 
 public class Sound {
     Clip clip;
-     URL soundURL[]=new URL[30];
+    URL soundURL[]=new URL[30];
 
-     public Sound(){
-         soundURL[0]=getClass().getResource("/sounds/stalker.wav");
-     }
+    public Sound(){
+        soundURL[0]=getClass().getResource("/sounds/stalker.wav");
+        soundURL[2]=getClass().getResource("/sounds/damage.wav");
 
-     public void setFile(int i){
-         try{
-             AudioInputStream ais= AudioSystem.getAudioInputStream(soundURL[i]);
-             clip =AudioSystem.getClip();
-             clip.open(ais);
-         }catch (Exception e){
-             e.printStackTrace();
-         }
+    }
 
-     }
+    public void setFile(int i){
+        try{
+            AudioInputStream ais= AudioSystem.getAudioInputStream(soundURL[i]); // Line 18 will now work for index 2 if soundURL[2] is initialized
+            clip =AudioSystem.getClip();
+            clip.open(ais);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
     public void play(){
-         clip.start();
+        clip.start();
     }
     public void loop(){
-         clip.loop(clip.LOOP_CONTINUOUSLY);
+        clip.loop(clip.LOOP_CONTINUOUSLY);
     }
     public void stop(){clip.stop();}
 }

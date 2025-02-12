@@ -37,7 +37,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public Player player;
     public SuperObject obj[] = new SuperObject[10];
-    public Enemy[] enemies = new Enemy[100];
+    public Enemy[] enemies = new Enemy[10];
     public collisionChecker checker = new collisionChecker(this);
     public AssetSetter aSetter = new AssetSetter(this);
     public UI ui = new UI(this);
@@ -45,8 +45,8 @@ public class GamePanel extends JPanel implements Runnable {
     // Health
     public OBJ_heart heart = new OBJ_heart(this);
     public int maxHealth = 100;
-    public int heartsToDisplay = 3;
-
+    public int heartsToDisplay = 5;
+    public int healthPerHeart;
 
     public GamePanel() {
         player = new Player(this, keyh);
@@ -56,6 +56,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.setDoubleBuffered(true);
         this.addKeyListener(keyh); // Use the instance with the 'this' reference
         this.setFocusable(true);
+        healthPerHeart = (int) Math.ceil((double) maxHealth / heartsToDisplay);
     }
 
     public void setupGame() {

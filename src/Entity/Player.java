@@ -16,18 +16,25 @@ public class Player extends Entity {
     public int health = 100;
     public boolean hasKey = false;
 
+    //invincible
+    private boolean isInvincible = false;
+    private int invincibleCounter = 0;
+    private final int invincibleDuration = 60; // 1 second at 60 FPS
+    private boolean visible = true; // For blinking effect
+
     public Player(GamePanel gp, KeyHandler keyH) {
+
         this.gp = gp;
         this.keyH = keyH;
         screenX = gp.screenWidth / 2 - gp.tileSize / 2;
         screenY = gp.screenHeight / 2 - gp.tileSize / 2;
-        solidArea= new Rectangle();
-        solidArea.x=8;
-        solidArea.y=16;
-        solidAreaDefaultX=solidArea.x;
-        solidAreaDefaultY=solidArea.y;
-        solidArea.width=32;
-        solidArea.height=32;
+        solidArea = new Rectangle();
+        solidArea.x = 8;
+        solidArea.y = 16;
+        solidAreaDefaultX = solidArea.x;
+        solidAreaDefaultY = solidArea.y;
+        solidArea.width = 32;
+        solidArea.height = 32;
         setDefaultValues();
         getPlayerImage();
     }
@@ -110,34 +117,59 @@ public class Player extends Entity {
                 spriteCounter = 0;
             }
         }
+
+        // Update invincibility timer
+        if (isInvincible) {
+            invincibleCounter++;
+
+            // Blink effect: toggle visibility every 5 frames
+            if (invincibleCounter % 5 == 0) {
+                visible = !visible;
+            }
+
+            // End invincibility period
+            if (invincibleCounter >= invincibleDuration) {
+                isInvincible = false;
+                invincibleCounter = 0;
+                visible = true;
+            }
+        }
     }
 
 
     public void draw(Graphics2D g2) {
-        BufferedImage image = null;
-        switch (direction) {
-            case "up":
-                image = (spriteNum == 1) ? up1 : up2;
-                break;
-            case "down":
-                image = (spriteNum == 1) ? down1 : down2;
-                break;
-            case "left":
-                image = (spriteNum == 1) ? left1 : left2;
-                break;
-            case "right":
-                image = (spriteNum == 1) ? right1 : right2;
-                break;
+        if(visible) { // Only draw when visible (for blinking effect)
+            BufferedImage image = null;
+            switch(direction) {
+                case "up":
+                    image = (spriteNum == 1) ? up1 : up2;
+                    break;
+                case "down":
+                    image = (spriteNum == 1) ? down1 : down2;
+                    break;
+                case "left":
+                    image = (spriteNum == 1) ? left1 : left2;
+                    break;
+                case "right":
+                    image = (spriteNum == 1) ? right1 : right2;
+                    break;
+            }
+            g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
         }
-        g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
     }
     public void takeDamage(int damage) {
-        health -= damage;
-        if (health <= 0) {
-            health = 0;
+        if(!isInvincible) {
+            health -= damage;
+            isInvincible = true; // Start invincibility period
+            invincibleCounter = 0;
+            visible = true;
             gp.playSE(2);
-            gp.ui.gameOver = true; // Set gameOver to true in UI class
-            System.out.println("Game Over!");
+
+            if(health <= 0) {
+                health = 0;
+                gp.ui.gameOver = true;
+                System.out.println("Game Over!");
+            }
         }
     }
-}
+    }

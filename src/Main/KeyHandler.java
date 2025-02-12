@@ -4,11 +4,11 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener {
-    GamePanel gp; // Add GamePanel reference
+    GamePanel gp; 
 
     public boolean upPressed, downPressed, leftPressed, rightPressed;
 
-    public KeyHandler(GamePanel gp) { // Constructor to receive GamePanel instance
+    public KeyHandler(GamePanel gp) { 
         this.gp = gp;
     }
 
@@ -20,7 +20,7 @@ public class KeyHandler implements KeyListener {
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
 
-        if (gp.ui.gameOver) { // Check gameOver flag
+        if (gp.ui.gameOver) { 
             if (code == KeyEvent.VK_ENTER) {
                 gp.ui.gameOver = false;
                 gp.player.health = 100;
@@ -28,7 +28,7 @@ public class KeyHandler implements KeyListener {
                 gp.aSetter.setEnemies();
                 gp.playMusic(0);
             }
-        } else { // Normal game input handling
+        } else { 
             if (code == KeyEvent.VK_W) upPressed = true;
             if (code == KeyEvent.VK_S) downPressed = true;
             if (code == KeyEvent.VK_A) leftPressed = true;

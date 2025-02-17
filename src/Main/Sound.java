@@ -11,7 +11,9 @@ public class Sound {
 
     public Sound(){
         soundURL[0]=getClass().getResource("/sounds/stalker.wav");
+        soundURL[1]=getClass().getResource("/sounds/menu.wav");
         soundURL[2]=getClass().getResource("/sounds/damage.wav");
+        soundURL[3]=getClass().getResource("/sounds/menuBump.wav");
 
     }
 

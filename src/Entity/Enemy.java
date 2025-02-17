@@ -54,8 +54,8 @@ public class Enemy extends Entity {
             double dirX = deltaX / distance;
             double dirY = deltaY / distance;
 
-            // **Direction Update Logic:**
-            if (Math.abs(dirX) > Math.abs(dirY)) { // Horizontal movement is greater
+            // Direction Update Logic
+            if (Math.abs(dirX) > Math.abs(dirY)) {
                 if (dirX > 0) {
                     direction = "right";
                 } else {
@@ -69,20 +69,20 @@ public class Enemy extends Entity {
                 }
             }
 
-            // Store original world coordinates
+            //original world coordinates
             int tempWorldX = worldX;
             int tempWorldY = worldY;
 
-            // Attempt movement in x direction
+            //movement in x direction
             worldX += dirX * speed;
-            gp.checker.checkEnemyWithTile(this); // Check for tile collision
+            gp.checker.checkEnemyWithTile(this); // Check tile collision
             if (collisionOn) {
                 worldX = tempWorldX; // Reset if collision
             }
 
-            // Attempt movement in y direction
+            //movement y direction
             worldY += dirY * speed;
-            gp.checker.checkEnemyWithTile(this); // Check for tile collision
+            gp.checker.checkEnemyWithTile(this); // Check tile collision
             if (collisionOn) {
                 worldY = tempWorldY; // Reset if collision
             }

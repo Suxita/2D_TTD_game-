@@ -43,17 +43,14 @@ public class TileManager {
 
             while (col < gp.maxWorldCol && row < gp.maxWorldRow) {
                 String line = br.readLine();
-               while (col<gp.maxScreenCol){
-
                 String[] numbers = line.split(" ");
-                while (col < gp.maxWorldCol && col < numbers.length) { 
+                while (col < gp.maxWorldCol && col < numbers.length) {
                     int num = Integer.parseInt(numbers[col]);
                     mapTileNumber[col][row] = num;
                     col++;
                 }
-                }
-                col = 0; 
-                row++;
+                col = 0; // Reset column for the next row
+                row++;   // Move to the next row
             }
             br.close();
         } catch (Exception e) {

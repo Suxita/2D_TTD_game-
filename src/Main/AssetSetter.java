@@ -2,8 +2,6 @@ package Main;
 import Entity.Enemy;
 import java.util.Random;
 
-import object.OBJ_key;
-
 public class AssetSetter {
     GamePanel gp;
     Random random = new Random();
@@ -12,9 +10,7 @@ public class AssetSetter {
     }
 
     public void setObject(){
-        gp.obj[0]= new OBJ_key(gp);
-        gp.obj[0].worldX=23 *gp.tileSize;
-        gp.obj[0].worldY=7*gp.tileSize;
+
 
     }
     public void setEnemies() {

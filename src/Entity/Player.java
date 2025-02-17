@@ -14,7 +14,7 @@ public class Player extends Entity {
     public final int screenX;
     public final int screenY;
     public int health = 100;
-    public boolean hasKey = false;
+
 
     //invincible
     private boolean isInvincible = false;
@@ -138,7 +138,7 @@ public class Player extends Entity {
 
 
     public void draw(Graphics2D g2) {
-        if(visible) { // Only draw when visible (fo
+        if(visible) {
             BufferedImage image = null;
             switch(direction) {
                 case "up":

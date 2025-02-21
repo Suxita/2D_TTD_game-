@@ -9,7 +9,7 @@ try to kill you so be brave and try to survive hedgehog waves :p
 Doing this project had only
 1 goal and it was learning
 
-![Ingame TitleScreen](/res/Markdown/gif.gif)
+![Ingame TitleScreen](res/Markdown/gif.gif)
 
 ## 📜 Features learned
 
@@ -43,7 +43,7 @@ Doing this project had only
    ```
 
 ## 📊 Technical Highlights
-For a detailed breakdown of the project files and projects structure, check the [STRUCTURE.md](STRUCTURE.md) 
+For a detailed breakdown of the project files and projects structure, check the [STRUCTURE.md](Documantation/STRUCTURE.md) 
 
 ## 🧩 Customization
 If your goal is to play around and make your own levels you can absolutely do it

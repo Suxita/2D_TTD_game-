@@ -33,7 +33,7 @@ Doing this project had only
 2. **Compile the game**:
 
    ```bash
-   javac Main/*.java Entity/*.java object/*.java Tile/*.java
+   javac Main/*.java Entity/*.java object/*.java Tile/*.java Projectile/*.java
    ```
 
 3. **Run the game**:

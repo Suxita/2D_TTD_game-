@@ -1,4 +1,4 @@
-# 2D game 
+# Top to Down 2D game 
 
 So this is my  first
 ever made from scratch game, placeholder for it is "comrad pixel”.

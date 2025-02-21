@@ -23,7 +23,7 @@
 │   └── TileManager.java     // Tile management and map loading
 │
 ├── Projectile/
-│   └──Bullet               //Bullet drawing and logic
+│   └──Bullet.java           //Bullet drawing and logic
 │
 └── resources/
     ├── sounds/              // Game sound effects and music

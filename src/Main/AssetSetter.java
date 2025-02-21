@@ -14,11 +14,14 @@ public class AssetSetter {
 
     }
     public void setEnemies() {
-     for (int i = 0; i < gp.enemies.length; i++)
 
-    {
-        gp.enemies[i] = new Enemy(gp);
-
+        for (int i = 0; i < gp.enemyAmount; i++) { // Iterate up to enemyAmount
+            Enemy enemy = new Enemy(gp);
+            setEnemyPosition(enemy); // Position the enemy
+            gp.enemies.add(enemy);   // Add the enemy to the ArrayList
+        }
+    }
+    public void setEnemyPosition(Enemy enemy) {
         int worldX, worldY;
         boolean spawned = false;
 
@@ -31,12 +34,10 @@ public class AssetSetter {
 
             if (screenX < -gp.tileSize || screenX > gp.screenWidth + gp.tileSize ||
                     screenY < -gp.tileSize || screenY > gp.screenHeight + gp.tileSize) {
-                gp.enemies[i].worldX = worldX;
-                gp.enemies[i].worldY = worldY;
-                gp.enemies[i].speed = random.nextInt(3) + 1;
+                enemy.worldX = worldX;
+                enemy.worldY = worldY;
                 spawned = true;
             }
-        }
         }
     }
 }

@@ -22,6 +22,6 @@ public class main {
         gamePanel.setFullScreen();
         gamePanel.startGameThread();
 
-        gamePanel.requestFocusInWindow(); // *** Request focus for the game panel ***
+        gamePanel.requestFocusInWindow();
     }
 }

@@ -1,14 +1,22 @@
 package Entity;
 
 import Main.GamePanel;
+import Main.GameState;
 import Main.KeyHandler;
+import Projectile.Bullet;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Player extends Entity {
+
+    public ArrayList<Bullet> bullets = new ArrayList<>();
+    private long lastShotTime = 0;
+    private final long shotCooldown = 300;
+
     GamePanel gp;
     KeyHandler keyH;
     public final int screenX;
@@ -134,13 +142,17 @@ public class Player extends Entity {
                 visible = true;
             }
         }
+        if (gp.keyh.ePressed && System.currentTimeMillis() - lastShotTime >= shotCooldown) { // Check space pressed and cooldown
+            shoot();
+            lastShotTime = System.currentTimeMillis(); // Update last shot time
+        }
     }
 
 
     public void draw(Graphics2D g2) {
-        if(visible) {
+        if (visible) {
             BufferedImage image = null;
-            switch(direction) {
+            switch (direction) {
                 case "up":
                     image = (spriteNum == 1) ? up1 : up2;
                     break;
@@ -157,19 +169,28 @@ public class Player extends Entity {
             g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
         }
     }
+
     public void takeDamage(int damage) {
-        if(!isInvincible) {
+        if (!isInvincible) {
             health -= damage;
-            isInvincible = true; // Start invincibility
+            isInvincible = true;
             invincibleCounter = 0;
             visible = true;
             gp.playSE(2);
 
-            if(health <= 0) {
+            if (health <= 0) {
                 health = 0;
                 gp.ui.gameOver = true;
-                System.out.println("Game Over!");
+                gp.gameState = GameState.GAME_OVER_STATE;
             }
         }
     }
+
+    private void shoot() {
+        // Calculate bullet starting position (center of player)
+        int startX = worldX + gp.tileSize/2 - 4;
+        int startY = worldY + gp.tileSize/2 - 4;
+        bullets.add(new Bullet(gp, startX, startY, direction));
+        gp.playSE(4);
     }
+}

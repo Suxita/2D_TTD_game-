@@ -21,7 +21,7 @@ public class Enemy extends Entity {
     public Enemy(GamePanel gp) {
         this.gp = gp;
         solidArea = new Rectangle(0, 0, 48, 48);
-        speed = 2;
+        speed = 4;
         direction = "down";
         getPlayerImage();
     }

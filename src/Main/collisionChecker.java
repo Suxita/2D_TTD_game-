@@ -4,7 +4,9 @@ import Entity.Entity;
 import Entity.Enemy;
 import Entity.Player;
 import java.awt.*;
+import java.util.Iterator;
 
+import Projectile.Bullet;
 public class collisionChecker {
 
     GamePanel gp;
@@ -154,4 +156,26 @@ public class collisionChecker {
         }
         return false;
     }
+
+
+    public void checkBulletEnemyCollision(Bullet bullet) {
+        Rectangle bulletRect = new Rectangle(bullet.worldX + bullet.solidArea.x, bullet.worldY + bullet.solidArea.y, bullet.solidArea.width, bullet.solidArea.height);
+        Iterator<Enemy> iterator = gp.enemies.iterator();
+        while (iterator.hasNext()) { // While there are more enemies to check
+            Enemy enemy = iterator.next(); // Get the next enemy
+
+            if (enemy != null) {
+                Rectangle enemyRect = new Rectangle(enemy.worldX + enemy.solidArea.x, enemy.worldY + enemy.solidArea.y, enemy.solidArea.width, enemy.solidArea.height);
+
+                if (bulletRect.intersects(enemyRect)) {
+                    bullet.alive = false;
+                    iterator.remove(); // remove the current enemy from the ArrayList using the Iterator
+                    gp.livingEnemiesCount--;
+                    gp.playSE(5);
+                    break;
+                }
+            }
+        }
+    }
+
 }
